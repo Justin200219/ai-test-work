@@ -183,13 +183,30 @@ async function routes(fastify, options) {
   fastify.post('/api/chat', async (request, reply) => {
     try {
       const { message, model = 'llama3', language = 'en' } = request.body;
-      
+
       // Add language context to the prompt
+      function findDutchMistakes(text) {
+        const dictionary = new Set([
+          'ik', 'jij', 'hij', 'zij', 'wij', 'jullie', 'zij', 'ben', 'bent', 'is',
+          'zijn', 'heb', 'hebt', 'heeft', 'hebben', 'een', 'de', 'het', 'huis',
+          'auto', 'fiets', 'leren', 'nederlands', 'goed', 'dag', 'hallo', 'doei'
+        ]);
+        return text
+          .toLowerCase()
+          .split(/[\s,.!?]+/)
+          .filter((w) => w && !dictionary.has(w))
+          .slice(0, 5);
+      }
+
       let languagePrompt;
       if (language === 'nl') {
-        languagePrompt = `Please respond in Dutch. Here is the user's message: ${message}`;
+        const mistakes = findDutchMistakes(message);
+        const misspell = mistakes.length
+          ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
+          : '';
+        languagePrompt = `Je bent een docent Nederlands. Controleer het bericht van de gebruiker op spelfouten en corrigeer ze kort.${misspell} Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te blijven leren. Geen vertaling nodig. Bericht: ${message}`;
       } else {
-        languagePrompt = `Please answer first in ${language}, then provide a Dutch translation. Here is the user's message: ${message}`;
+        languagePrompt = `Je bent een docent Nederlands. Beantwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Bericht: ${message}`;
       }
       
       const response = await axios.post('http://localhost:11434/api/generate', {
