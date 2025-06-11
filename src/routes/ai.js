@@ -126,6 +126,7 @@ async function routes(fastify, options) {
       // Validate if it's a supported language
       const supportedLanguages = [
         'en', // English
+        'nl', // Dutch
         'ar', // Arabic
         'tr', // Turkish
         'ku', // Kurdish (Kurmanji)
@@ -184,7 +185,12 @@ async function routes(fastify, options) {
       const { message, model = 'llama3', language = 'en' } = request.body;
       
       // Add language context to the prompt
-      const languagePrompt = `Please respond in ${language}. Here is the user's message: ${message}`;
+      let languagePrompt;
+      if (language === 'nl') {
+        languagePrompt = `You are a tutor helping a user practice Dutch. Respond briefly in Dutch only. User message: ${message}`;
+      } else {
+        languagePrompt = `You are a tutor helping the user learn Dutch. Reply with a short sentence in Dutch, then provide a ${language} translation. Keep it brief. User message: ${message}`;
+      }
       
       const response = await axios.post('http://localhost:11434/api/generate', {
         model: model,
