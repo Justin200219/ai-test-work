@@ -221,7 +221,6 @@ async function routes(fastify, options) {
       }
 
       const targetLanguage = languageNames[language] || 'English';
-
       let languagePrompt;
       if (language === 'nl') {
         const mistakes = findDutchMistakes(message);
@@ -230,7 +229,8 @@ async function routes(fastify, options) {
           : '';
         languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
       } else {
-        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${targetLanguage}. Gebruik geen Engels.`;
+
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
       }
 
       const response = await axios.post('http://localhost:11434/api/generate', {
