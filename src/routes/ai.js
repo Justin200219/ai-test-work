@@ -222,22 +222,15 @@ async function routes(fastify, options) {
 
       const targetLanguage = languageNames[language] || 'English';
       let languagePrompt;
-      if (language === 'nl') {
-        const mistakes = findDutchMistakes(message);
-        const misspell = mistakes.length
-          ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
-          : '';
-<<<<<<< HEAD
-        
-        languagePrompt = `Geef alleen de Nederlandse respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
-      } else {
-        languagePrompt = `Geef alleen de Nederlandse respons op de eerste regel. Op de tweede regel, de ${language} vertaling van die respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
-=======
-        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
-      } else {
+      const mistakes = findDutchMistakes(message);
+      const misspell = mistakes.length
+        ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
+        : '';
 
-        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
->>>>>>> e455481aff8a7ce022c81fb4d9ead84b143cc0bc
+      if (language === 'nl') {
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Geen Engels.`;
+      } else {
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Vertaal daarna naar het ${language}. Geen Engels.`;
       }
 
       const response = await axios.post('http://localhost:11434/api/generate', {
