@@ -191,6 +191,7 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
+
       const { message, model = 'gpt-3.5-turbo', language = 'en' } = request.body;
 
       // Add language context to the prompt
@@ -213,6 +214,7 @@ async function routes(fastify, options) {
         const misspell = mistakes.length
           ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
           : '';
+        
         languagePrompt = `Je bent een docent Nederlands. Controleer het bericht van de gebruiker op spelfouten en corrigeer ze kort.${misspell} Antwoord kort in het Nederlands. Gebruik geen Engels. Bericht: ${message}`;
       } else {
         languagePrompt = `Je bent een docent Nederlands. Antwoord eerst kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels. Bericht: ${message}`;
