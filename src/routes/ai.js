@@ -1,5 +1,27 @@
 const axios = require('axios');
 
+const languageNames = {
+  en: 'English',
+  nl: 'Dutch',
+  ar: 'Arabic',
+  tr: 'Turkish',
+  ku: 'Kurdish',
+  ckb: 'Kurdish',
+  ti: 'Tigrinya',
+  so: 'Somali',
+  es: 'Spanish',
+  ur: 'Urdu',
+  fa: 'Farsi',
+  bn: 'Bengali',
+  zh: 'Chinese',
+  am: 'Amharic',
+  ru: 'Russian',
+  uk: 'Ukrainian',
+  pa: 'Punjabi',
+  pnb: 'Punjabi',
+  bg: 'Bulgarian'
+};
+
 // Language detection helper functions
 const languagePatterns = {
   es: /[áéíóúñ¿¡]/i, // Spanish specific characters
@@ -198,6 +220,7 @@ async function routes(fastify, options) {
           .slice(0, 5);
       }
 
+      const targetLanguage = languageNames[language] || 'English';
       let languagePrompt;
       if (language === 'nl') {
         const mistakes = findDutchMistakes(message);
@@ -206,6 +229,7 @@ async function routes(fastify, options) {
           : '';
         languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
       } else {
+
         languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
       }
 
