@@ -15,6 +15,18 @@ export const translations = {
     detect: 'Detect Language',
     detecting: 'Detecting...'
   },
+  nl: {
+    appTitle: 'AI Taal Leer Assistent',
+    typeMessage: 'Typ je bericht...',
+    send: 'Verstuur',
+    thinking: 'Denken...',
+    error: 'Kon geen reactie van AI krijgen',
+    detectLanguageTitle: 'Welkom bij AI Taal Leren',
+    detectLanguageDescription: 'Voer een zin van minstens 5 woorden in je moedertaal in zodat we je voorkeurstaal kunnen detecteren.',
+    enterWord: 'Voer een woord in...',
+    detect: 'Detecteer Taal',
+    detecting: 'Detecteren...'
+  },
   ar: {
     appTitle: 'مساعد تعلم اللغات بالذكاء الاصطناعي',
     typeMessage: 'اكتب رسالتك...',
