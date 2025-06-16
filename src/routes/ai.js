@@ -182,7 +182,7 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
-      const { message, model = 'llama3', language = 'en' } = request.body;
+      const { message, model = 'llama3', language = 'en', isFirstMessage = false } = request.body;
 
       // Add language context to the prompt
       function findDutchMistakes(text) {
@@ -204,15 +204,14 @@ async function routes(fastify, options) {
         const misspell = mistakes.length
           ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
           : '';
-        
-        languagePrompt = `Je bent een docent Nederlands. Controleer het bericht van de gebruiker op spelfouten en corrigeer ze kort.${misspell} Antwoord kort in het Nederlands. Gebruik geen Engels. Bericht: ${message}`;
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
       } else {
-        languagePrompt = `Je bent een docent Nederlands. Antwoord eerst kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels. Bericht: ${message}`;
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
       }
-      
+
       const response = await axios.post('http://localhost:11434/api/generate', {
         model: model,
-        prompt: languagePrompt,
+        prompt: `${languagePrompt} Bericht: ${message}`,
         stream: false
       });
 
