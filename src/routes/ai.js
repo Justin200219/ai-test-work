@@ -1,9 +1,4 @@
 const axios = require('axios');
-const OpenAI = require('openai');
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
 
 // Language detection helper functions
 const languagePatterns = {
@@ -119,18 +114,14 @@ async function routes(fastify, options) {
       const patternDetectedLang = detectLanguageFromText(text);
       
       // Then use AI for confirmation
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'user',
-            content: `Analyze this text and respond with ONLY the ISO 639-1 language code (e.g., 'en' for English, 'es' for Spanish, etc.). Consider both character patterns and common words. Text: "${text}"`
-          }
-        ]
+      const response = await axios.post('http://localhost:11434/api/generate', {
+        model: 'llama3',
+        prompt: `Analyze this text and respond with ONLY the ISO 639-1 language code (e.g., 'en' for English, 'es' for Spanish, etc.). Consider both character patterns and common words. Text: "${text}"`,
+        stream: false
       });
 
       // Extract language code from response
-      const aiDetectedLang = completion.choices[0]?.message?.content.trim().toLowerCase();
+      const aiDetectedLang = response.data.response.trim().toLowerCase();
       
       // Validate if it's a supported language
       const supportedLanguages = [
@@ -191,17 +182,18 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
+      const { message, model = 'llama3', language = 'en', isFirstMessage = false } = request.body;
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
 
-      const { message, model = 'gpt-3.5-turbo', language = 'en' } = request.body;
-
-      // Add language context to the prompt
-      function findDutchMistakes(text) {
-        const dictionary = new Set([
-          'ik', 'jij', 'hij', 'zij', 'wij', 'jullie', 'zij', 'ben', 'bent', 'is',
-          'zijn', 'heb', 'hebt', 'heeft', 'hebben', 'een', 'de', 'het', 'huis',
-          'auto', 'fiets', 'leren', 'nederlands', 'goed', 'dag', 'hallo', 'doei'
-        ]);
-        return text
+      const response = await axios.post('http://localhost:11434/api/generate', {
+        prompt: `${languagePrompt} Bericht: ${message}`,
+        stream: false
+        response: response.data.response
+      console.error('Error calling Ollama:', error);
+        error: 'Failed to get response from Ollama'
+      const response = await axios.get('http://localhost:11434/api/tags');
+        models: response.data.models
           .toLowerCase()
           .split(/[\s,.!?]+/)
           .filter((w) => w && !dictionary.has(w))

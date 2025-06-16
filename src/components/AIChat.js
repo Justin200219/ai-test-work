@@ -8,7 +8,8 @@ const AIChat = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [models, setModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo');
+  const [selectedModel, setSelectedModel] = useState('llama3');
+  const [isFirst, setIsFirst] = useState(true);
   const { selectedLanguage, t } = useLanguage();
   const messagesEndRef = useRef(null);
 
@@ -45,9 +46,15 @@ const AIChat = () => {
     setIsLoading(true);
 
     try {
-      const response = await aiService.sendMessage(input, selectedModel, selectedLanguage);
+      const response = await aiService.sendMessage(
+        input,
+        selectedModel,
+        selectedLanguage,
+        isFirst
+      );
       if (response.success) {
         setMessages(prev => [...prev, { role: 'assistant', content: response.response }]);
+        setIsFirst(false);
       }
     } catch (error) {
       setMessages(prev => [...prev, { role: 'error', content: t('error') }]);

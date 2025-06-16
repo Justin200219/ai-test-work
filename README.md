@@ -4,8 +4,6 @@
 
 ## Getting started
 
-Create a `.env` file based on `.env.example` and provide your OpenAI API key. This
-key is required to enable ChatGPT features.
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
