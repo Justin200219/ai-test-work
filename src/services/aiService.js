@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'http://localhost:3001/api';
 
 export const aiService = {
-  async sendMessage(message, model = 'llama3', language = 'en') {
+  async sendMessage(message, model = 'gpt-3.5-turbo', language = 'en') {
     try {
       const response = await axios.post(`${API_URL}/chat`, { 
         message, 
