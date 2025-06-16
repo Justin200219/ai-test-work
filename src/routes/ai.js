@@ -1,9 +1,4 @@
 const axios = require('axios');
-const OpenAI = require('openai');
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
 
 // Language detection helper functions
 const languagePatterns = {
@@ -119,18 +114,14 @@ async function routes(fastify, options) {
       const patternDetectedLang = detectLanguageFromText(text);
       
       // Then use AI for confirmation
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'user',
-            content: `Analyze this text and respond with ONLY the ISO 639-1 language code (e.g., 'en' for English, 'es' for Spanish, etc.). Consider both character patterns and common words. Text: "${text}"`
-          }
-        ]
+      const response = await axios.post('http://localhost:11434/api/generate', {
+        model: 'llama3',
+        prompt: `Analyze this text and respond with ONLY the ISO 639-1 language code (e.g., 'en' for English, 'es' for Spanish, etc.). Consider both character patterns and common words. Text: "${text}"`,
+        stream: false
       });
 
       // Extract language code from response
-      const aiDetectedLang = completion.choices[0]?.message?.content.trim().toLowerCase();
+      const aiDetectedLang = response.data.response.trim().toLowerCase();
       
       // Validate if it's a supported language
       const supportedLanguages = [
@@ -191,8 +182,7 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
-
-      const { message, model = 'gpt-3.5-turbo', language = 'en' } = request.body;
+      const { message, model = 'llama3', language = 'en' } = request.body;
 
       // Add language context to the prompt
       function findDutchMistakes(text) {
@@ -220,20 +210,21 @@ async function routes(fastify, options) {
         languagePrompt = `Je bent een docent Nederlands. Antwoord eerst kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels. Bericht: ${message}`;
       }
       
-      const completion = await openai.chat.completions.create({
+      const response = await axios.post('http://localhost:11434/api/generate', {
         model: model,
-        messages: [{ role: 'user', content: languagePrompt }]
+        prompt: languagePrompt,
+        stream: false
       });
 
       return {
         success: true,
-        response: completion.choices[0]?.message?.content
+        response: response.data.response
       };
     } catch (error) {
-      console.error('Error calling OpenAI:', error);
+      console.error('Error calling Ollama:', error);
       return reply.status(500).send({
         success: false,
-        error: 'Failed to get response from OpenAI'
+        error: 'Failed to get response from Ollama'
       });
     }
   });
@@ -241,10 +232,10 @@ async function routes(fastify, options) {
   // Get available models
   fastify.get('/api/models', async (request, reply) => {
     try {
-      const response = await openai.models.list();
+      const response = await axios.get('http://localhost:11434/api/tags');
       return {
         success: true,
-        models: response.data
+        models: response.data.models
       };
     } catch (error) {
       console.error('Error fetching models:', error);

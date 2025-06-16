@@ -8,7 +8,7 @@ const AIChat = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [models, setModels] = useState([]);
-  const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo');
+  const [selectedModel, setSelectedModel] = useState('llama3');
   const { selectedLanguage, t } = useLanguage();
   const messagesEndRef = useRef(null);
 
