@@ -1,5 +1,27 @@
 const axios = require('axios');
 
+const languageNames = {
+  en: 'English',
+  nl: 'Dutch',
+  ar: 'Arabic',
+  tr: 'Turkish',
+  ku: 'Kurdish',
+  ckb: 'Kurdish',
+  ti: 'Tigrinya',
+  so: 'Somali',
+  es: 'Spanish',
+  ur: 'Urdu',
+  fa: 'Farsi',
+  bn: 'Bengali',
+  zh: 'Chinese',
+  am: 'Amharic',
+  ru: 'Russian',
+  uk: 'Ukrainian',
+  pa: 'Punjabi',
+  pnb: 'Punjabi',
+  bg: 'Bulgarian'
+};
+
 // Language detection helper functions
 const languagePatterns = {
   es: /[áéíóúñ¿¡]/i, // Spanish specific characters
@@ -182,7 +204,7 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
-      const { message, model = 'llama3', language = 'en' } = request.body;
+      const { message, model = 'llama3', language = 'en', isFirstMessage = false } = request.body;
 
       // Add language context to the prompt
       function findDutchMistakes(text) {
@@ -198,21 +220,29 @@ async function routes(fastify, options) {
           .slice(0, 5);
       }
 
+      const targetLanguage = languageNames[language] || 'English';
       let languagePrompt;
       if (language === 'nl') {
         const mistakes = findDutchMistakes(message);
         const misspell = mistakes.length
           ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
           : '';
+<<<<<<< HEAD
         
         languagePrompt = `Geef alleen de Nederlandse respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
       } else {
         languagePrompt = `Geef alleen de Nederlandse respons op de eerste regel. Op de tweede regel, de ${language} vertaling van die respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
+=======
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Gebruik geen Engels.`;
+      } else {
+
+        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels.`;
+>>>>>>> e455481aff8a7ce022c81fb4d9ead84b143cc0bc
       }
-      
+
       const response = await axios.post('http://localhost:11434/api/generate', {
         model: model,
-        prompt: languagePrompt,
+        prompt: `${languagePrompt} Bericht: ${message}`,
         stream: false
       });
 
