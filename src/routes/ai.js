@@ -26,7 +26,7 @@ const commonWords = {
   es: ['el', 'la', 'los', 'las', 'y', 'en', 'de', 'que', 'por', 'con', 'para', 'como', 'se', 'lo', 'su', 'al', 'del', 'más', 'pero', 'o'],
   ar: ['ال', 'في', 'من', 'على', 'إلى', 'عن', 'مع', 'هذا', 'هذه', 'كان', 'هو', 'هي', 'أن', 'ما', 'لا', 'قد', 'عند', 'بين', 'حيث', 'كل'],
   fa: ['در', 'با', 'از', 'به', 'برای', 'که', 'این', 'آن', 'یا', 'هم', 'را', 'تا', 'اما', 'اگر', 'چون', 'چرا', 'چگونه', 'چه', 'کجا', 'کی'],
-  ur: ['میں', 'کا', 'کی', 'کے', 'سے', 'پر', 'میں', 'ہے', 'ہیں', 'تھا', 'تھی', 'تھے', 'ہو', 'ہوتی', 'ہوتا', 'ہوتے', 'کر', 'کرتا', 'کرتی', 'کرتے'],
+  ur: ['میں', 'کا', 'کی', 'کے', 'سے', 'پر', 'میں', 'ہے', 'ہیں', 'تھا', 'تھی', 'تھے', 'ہو', 'ہوتی', 'ہوتا', 'ہوتے'],
   bn: ['এবং', 'এর', 'এ', 'হয়', 'করে', 'যে', 'এই', 'সে', 'আমি', 'তুমি', 'আমরা', 'তোমরা', 'তারা', 'সব', 'কিছু', 'কোন', 'কেমন', 'কোথায়', 'কখন', 'কেন'],
   zh: ['的', '是', '在', '了', '和', '我', '你', '他', '她', '它', '们', '这', '那', '有', '不', '也', '就', '都', '要', '会'],
   ru: ['и', 'в', 'не', 'на', 'я', 'что', 'с', 'по', 'это', 'от', 'к', 'у', 'для', 'о', 'при', 'до', 'за', 'из', 'под', 'над'],
@@ -205,9 +205,9 @@ async function routes(fastify, options) {
           ? ` Mogelijke spelfouten: ${mistakes.join(', ')}.`
           : '';
         
-        languagePrompt = `Je bent een docent Nederlands. Controleer het bericht van de gebruiker op spelfouten en corrigeer ze kort.${misspell} Antwoord kort in het Nederlands. Gebruik geen Engels. Bericht: ${message}`;
+        languagePrompt = `Geef alleen de Nederlandse respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
       } else {
-        languagePrompt = `Je bent een docent Nederlands. Antwoord eerst kort in het Nederlands en moedig de gebruiker aan om Nederlands te leren. Vertaal daarna je antwoord naar het ${language}. Gebruik geen Engels. Bericht: ${message}`;
+        languagePrompt = `Geef alleen de Nederlandse respons op de eerste regel. Op de tweede regel, de ${language} vertaling van die respons. Geen extra tekst, labels, of uitleg. Bericht: ${message}`;
       }
       
       const response = await axios.post('http://localhost:11434/api/generate', {
@@ -216,9 +216,47 @@ async function routes(fastify, options) {
         stream: false
       });
 
+      // Get the Dutch response
+      let dutchResponse = response.data.response;
+
+      // Always translate to the user's preferred language if it's not Dutch
+      let translatedResponse = '';
+      if (language !== 'nl') {
+        const translationPrompt = `Vertaal de volgende Nederlandse tekst naar ${language}. Behoud de betekenis en toon. Tekst: ${dutchResponse}`;
+        const translationResponse = await axios.post('http://localhost:11434/api/generate', {
+          model: model,
+          prompt: translationPrompt,
+          stream: false
+        });
+        translatedResponse = translationResponse.data.response;
+      }
+
+      // --- Post-processing to clean AI response --- 
+      const cleanResponse = (text) => {
+        if (!text) return '';
+        const lines = text.split('\n');
+        const filteredLines = lines.filter(line => {
+          const lowerCaseLine = line.toLowerCase();
+          return !( 
+            lowerCaseLine.includes('note:') || 
+            lowerCaseLine.includes('here\'s a breakdown') || 
+            lowerCaseLine.includes('explanation:') || 
+            lowerCaseLine.includes('translation into') || 
+            lowerCaseLine.includes('nederlandstalig antwoord') || 
+            lowerCaseLine.includes('vertaling naar') ||
+            lowerCaseLine.includes('breakdown')
+          );
+        });
+        return filteredLines.join(' ').replace(/\s+/g, ' ').trim();
+      };
+
+      dutchResponse = cleanResponse(dutchResponse);
+      translatedResponse = cleanResponse(translatedResponse);
+      // --- End post-processing --- 
+
       return {
         success: true,
-        response: response.data.response
+        response: dutchResponse + (translatedResponse ? '\n\n' + translatedResponse : '')
       };
     } catch (error) {
       console.error('Error calling Ollama:', error);
