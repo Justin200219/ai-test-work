@@ -3,6 +3,7 @@ import './LanguageSelector.css';
 
 const languages = [
   { code: 'en', name: 'English' },
+  { code: 'nl', name: 'Dutch' },
   { code: 'ar', name: 'Arabic العربية' },
   { code: 'tr', name: 'Turkish' },
   { code: 'ku', name: 'Kurdish کوردی' },
