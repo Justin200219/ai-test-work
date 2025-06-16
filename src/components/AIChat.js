@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { aiService } from '../services/aiService';
-import LanguageSelector from './LanguageSelector';
 import { useLanguage } from '../contexts/LanguageContext';
 import './AIChat.css';
 
@@ -10,7 +9,7 @@ const AIChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [models, setModels] = useState([]);
   const [selectedModel, setSelectedModel] = useState('llama3');
-  const { selectedLanguage, setSelectedLanguage, t } = useLanguage();
+  const { selectedLanguage, t } = useLanguage();
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -60,10 +59,6 @@ const AIChat = () => {
   return (
     <div className="chat-container">
       <div className="selectors-container">
-        <LanguageSelector
-          selectedLanguage={selectedLanguage}
-          onLanguageChange={setSelectedLanguage}
-        />
         <select
           value={selectedModel}
           onChange={(e) => setSelectedModel(e.target.value)}
