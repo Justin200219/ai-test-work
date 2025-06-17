@@ -10,10 +10,6 @@ html, body {
   height: 100%;
   overflow: hidden; /* prevent page scrolling */
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-<<<<<<< HEAD
-=======
-  background: #f5f7fa;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,7 +17,6 @@ html, body {
 
 /* Card container */
 .container {
-<<<<<<< HEAD
   width: 100%;
   height: 100%; 
   background: #fff;
@@ -84,19 +79,6 @@ align-items: center;
     width: 20.51044rem;
   }
 }
-=======
-  width: 360px;
-  max-width: 90%;
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  height: 90vh;
-  padding: 32px 20px;
-}
-
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
 /* Top header: title + language selector */
 .top-header {
   display: flex;
@@ -164,11 +146,7 @@ align-items: center;
   overflow: hidden;
 }
 .progress-bar {
-<<<<<<< HEAD
   width: 40%; /* adjust as needed */
-=======
-  width: 40%; 
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   height: 100%;
   background: #00aaff;
 }
@@ -184,17 +162,6 @@ align-items: center;
 }
 .content h2 {
   width: 100%; 
-<<<<<<< HEAD
-  font-size: 30px;  
-  font-weight: 600;       
-  text-align: left;      
-  margin: 0 0 100px;      
-  align-self: flex-start;
-}
-.image-container {
-  width: 250px;
-  height: 250px;
-=======
   font-size: 20px;  
   font-weight: 600;       
   text-align: left;      
@@ -204,7 +171,6 @@ align-items: center;
 .image-container {
   width: 200px;
   height: 200px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   margin: 0 auto 24px;
 }
 .image-container img {
@@ -213,29 +179,17 @@ align-items: center;
   object-fit: contain;
 }
 .word {
-<<<<<<< HEAD
-  font-size: 26px;
-=======
   font-size: 24px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   font-weight: 600;
   margin-bottom: 6px;
 }
 .translation {
-<<<<<<< HEAD
-  font-size: 18px;
-=======
   font-size: 16px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   color: #777;
   font-weight: 400;
 }
 .phonetic {
-<<<<<<< HEAD
-  font-size: 16px;
-=======
   font-size: 14px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
   color: #555;
   margin-bottom: 32px;
 }
@@ -259,11 +213,7 @@ align-items: center;
 .listen-btn {
   background-color: #fd7f0e;
   color: #fff;
-<<<<<<< HEAD
-  padding: 16px 10px;
-=======
   padding: 10px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
 }
 .listen-btn img {
   width: 30px;
@@ -274,9 +224,5 @@ align-items: center;
   background: #fff;
   color: #333;
   border: 2px solid #e0e0e0;
-<<<<<<< HEAD
-  padding: 16px 10px;
-=======
   padding: 10px;
->>>>>>> a0153c23aada9d224f8037868138d21f875dd464
 }

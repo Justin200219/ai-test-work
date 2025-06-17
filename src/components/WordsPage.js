@@ -31,35 +31,35 @@ const WordsPage = () => {
             </div>
           </Link>
           <Link to="/house">
-            <div className="card">
+            <div className="topic-card topic-card-blue">
               <img src="/images/🏠.png" alt="" />
               <h3>Huis</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/supermarket">
-            <div className="card">
+            <div className="topic-card topic-card-blue">
               <img src="/images/🛒.png" alt="" />
               <h3>Supermarkt</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/restaurant">
-            <div className="card">
+            <div className="topic-card topic-card-blue">
               <img src="/images/🍝.png" alt="" />
               <h3>Restaurant</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/school">
-            <div className="card">
+            <div className="topic-card topic-card-blue">
               <img src="/images/📗.png" alt="" />
               <h3>School</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/time-days">
-            <div className="card">
+            <div className="topic-card topic-card-blue">
               <img src="/images/🕐.png" alt="" />
               <h3>Tijd / Dagen</h3>
               <p>5 levels</p>

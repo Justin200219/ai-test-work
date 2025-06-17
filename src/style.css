@@ -1,0 +1,69 @@
+.container_categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px; /* increased spacing between cards */
+    width: 100%;
+    max-width: 360px; /* slight increase for breathing room */
+    margin: 0 auto;
+    padding-top: 30px; /* more top padding */
+    justify-items: center;
+  }
+  
+  .topic-card {
+    width: 160px;
+    height: 160px;
+    padding: 16px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Baloo', sans-serif;
+    color: whitesmoke;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  
+  .topic-card-blue {
+    background-color: #00B5F9 !important;
+    border: 1px solid #0091c6 !important;
+  }
+  
+  .topic-card-orange {
+    background-color: #FD7F0E !important;
+    border: 1px solid #d36300 !important;
+  }
+  
+  .topic-card-green {
+    background-color: #77C801 !important;
+    border: 1px solid #71b60b !important;
+  }
+  
+  .topic-card img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    margin-bottom: 10px;
+  }
+  
+  /* Responsive: smaller devices */
+  @media (max-width: 400px) {
+    .topic-card {
+      width: 120px;
+      height: 120px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+  
+    .container_categories {
+      max-width: 250px;
+      gap: 16px;
+    }
+  
+    .topic-card img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+  
