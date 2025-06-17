@@ -62,7 +62,7 @@ const CategoryFruit = () => (
 
         <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2826.14 177.32">
             <defs>
-                <style>
+                <style>{`
                     .cls-1 {
                         stroke: #efc82c;
                     }
@@ -157,7 +157,7 @@ const CategoryFruit = () => (
                     .cls-9 {
                         fill: #ffe478;
                     }
-                </style>
+                `}</style>
             </defs> 
 
         
