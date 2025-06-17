@@ -17,7 +17,6 @@ const Level1Word2 = () => (
     </div>
 
     <hr className="divider" />
-
     <div className="sub-header">
       <button className="back-button">
         <Link to="/Words/Fruit-Category/Category-Fruit">
