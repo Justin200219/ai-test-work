@@ -261,7 +261,20 @@ background-color: #FFF8E4;
     justify-content: center;
 }
 
-.nav-words-outer, .nav-words-outer-1, .nav-words-outer-2, .nav-words-outer-3, .nav-words-outer-4 {
+.nav-words-5{
+background-color: #FFE5E5;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #FF3B30;
+    font-family: 'Baloo', sans-serif;
+}
+
+.nav-words-outer, .nav-words-outer-1, .nav-words-outer-2, .nav-words-outer-3, .nav-words-outer-4, .nav-words-outer-5 {
     display: flex;
     flex-direction: column;
     align-items: center;

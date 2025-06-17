@@ -3,6 +3,7 @@ import { aiService } from '../services/aiService';
 import { useLanguage } from '../contexts/LanguageContext';
 import { fetchTranslation } from './TranslationService';
 import './AIChat.css';
+import BottomNav from './BottomNav';
 
 const AIChat = () => {
   const [messages, setMessages] = useState([]);
@@ -73,6 +74,7 @@ const AIChat = () => {
   };
 
   return (
+    <>
     <div className="chat-container">
       <div className="selectors-container">
         <select
@@ -128,6 +130,8 @@ const AIChat = () => {
         </button>
       </form>
     </div>
+    <BottomNav />
+    </>
   );
 };
 

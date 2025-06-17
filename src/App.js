@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AIChat from "./components/AIChat";
 import LanguageDetection from "./components/LanguageDetection";
 import NameInputPage from './components/NameInputPage';
@@ -14,13 +14,14 @@ import './App.css';
 function AppContent() {
   const { t, isLanguageDetected, handleLanguageDetected } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // Redirect to name_input if language is detected initially
+  // Redirect from root path to name input once language is detected
   React.useEffect(() => {
-    if (isLanguageDetected) {
+    if (isLanguageDetected && location.pathname === '/') {
       navigate('/name-input');
     }
-  }, [isLanguageDetected, navigate]);
+  }, [isLanguageDetected, navigate, location.pathname]);
 
   if (!isLanguageDetected) {
     return <LanguageDetection onLanguageDetected={handleLanguageDetected} />;
