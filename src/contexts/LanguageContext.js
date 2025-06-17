@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const LanguageContext = createContext();
 
@@ -234,8 +234,12 @@ export const translations = {
 };
 
 export const LanguageProvider = ({ children }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState('en');
-  const [isLanguageDetected, setIsLanguageDetected] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState(() =>
+    localStorage.getItem('selectedLanguage') || 'en'
+  );
+  const [isLanguageDetected, setIsLanguageDetected] = useState(() =>
+    localStorage.getItem('isLanguageDetected') === 'true'
+  );
 
   const t = (key) => {
     return translations[selectedLanguage]?.[key] || translations['en'][key];
@@ -245,6 +249,14 @@ export const LanguageProvider = ({ children }) => {
     setSelectedLanguage(language);
     setIsLanguageDetected(true);
   };
+
+  useEffect(() => {
+    localStorage.setItem('selectedLanguage', selectedLanguage);
+  }, [selectedLanguage]);
+
+  useEffect(() => {
+    localStorage.setItem('isLanguageDetected', isLanguageDetected);
+  }, [isLanguageDetected]);
 
   return (
     <LanguageContext.Provider value={{ 
