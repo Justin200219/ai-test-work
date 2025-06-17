@@ -23,10 +23,10 @@ const SentencesPage = () => {
       <div className="container">
         <h2 className="choosetheme">Choose a topic</h2>
         <div className="container_categories">
-          <Link to="/sentences/familie">
-            <div className="topic-card topic-card-green">
-              <img src="/images/👨‍👩‍👧‍👦.png" alt="" />
-              <h3>Familie</h3>
+          <Link to="/Words/Fruit-Category/Category-Fruit">
+            <div className="card">
+              <img src="/images/🍇.png" alt="" />
+              <h3>Fruit</h3>
               <p>5 levels</p>
             </div>
           </Link>
