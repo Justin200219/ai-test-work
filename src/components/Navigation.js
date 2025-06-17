@@ -5,7 +5,7 @@ const Navigation = ({ activePage }) => {
   return (
     <nav>
       <div className="nav_container">
-        <a href="/public/words_pages/Words_home.html">
+        <a href="/public/Words.html">
           <div className={`nav-words-outer ${activePage === 'words' ? 'nav-words-outer-1' : ''}`}>
             <div className={`nav-words-1 ${activePage === 'words' ? 'active' : ''}`}>
               <img src="../public/images/Frame 32.svg" alt="Words Icon" />
@@ -21,7 +21,7 @@ const Navigation = ({ activePage }) => {
             <p>Pronunciation</p>
           </div>
         </a>
-        <a href="/public/Sentences_pages/Sentences.html">
+        <a href="/public/Sentences.html">
           <div className={`nav-words-outer ${activePage === 'sentences' ? 'nav-words-outer-3' : ''}`}>
             <div className={`nav-words-3 ${activePage === 'sentences' ? 'active' : ''}`}>
               <img src="../public/images/Frame 34.svg" alt="Sentences Icon" />
