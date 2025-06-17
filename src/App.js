@@ -2,17 +2,11 @@ import React from "react";
 import AIChat from "./components/AIChat";
 import LanguageDetection from "./components/LanguageDetection";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 
 function AppContent() {
-  const { t, isLanguageDetected, handleLanguageDetected } = useLanguage();
+  const { t, handleLanguageDetected } = useLanguage();
   const navigate = useNavigate();
 
   const handleDetected = (language) => {
@@ -27,13 +21,7 @@ function AppContent() {
         <Routes>
           <Route
             path="/"
-            element={
-              isLanguageDetected ? (
-                <Navigate to="/chat" replace />
-              ) : (
-                <LanguageDetection onLanguageDetected={handleDetected} />
-              )
-            }
+            element={<LanguageDetection onLanguageDetected={handleDetected} />}
           />
           <Route path="/chat" element={<AIChat />} />
         </Routes>
