@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="AI-powered language learning application" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/logo192.png" />
+    <link rel="stylesheet" href="/src/App.css" />
+    <link rel="stylesheet" href="/src/navigation.css" />
+    <link rel="stylesheet" href="/src/components/AIChat.css" />
+    <title>AI Chat - Language Learning</title>
+</head>
+<body>
+    <div class="top-header">
+        <div class="categorie/img"></div>
+        <h1>AI Chat</h1>
+        <img src="/public/images/ai-chat-icon.svg" alt="AI Chat Icon" class="Top-icon">
+
+        <button onclick="window.location.href='/public/Language_settings.html'" class="lang-button">
+            <img class="flag" src="/public/images/english flag.svg" alt="English" />
+            English
+        </button>
+    </div>
+
+    <nav>
+        <div class="nav_container">
+            <a href="/public/words_pages/Words_home.html">
+                <div class="nav-words-outer">
+                    <div class="nav-words-1">
+                        <img src="/public/images/Frame 32.svg" alt="Words Icon">
+                    </div>
+                    <p>Words</p>
+                </div>
+            </a>
+            <a href="pronunciation.html">
+                <div class="nav-words-outer-2">
+                    <div class="nav-words-2">
+                        <img src="/public/images/Frame 33.svg" alt="Pronunciation Icon">
+                    </div>
+                    <p>Pronunciation</p>
+                </div>
+            </a>
+            <a href="/public/Sentences_pages/Sentences.html">
+                <div class="nav-words-outer">
+                    <div class="nav-words-3">
+                        <img src="/public/images/Frame 34.svg" alt="Sentences Icon">
+                    </div>
+                    <p>Sentences</p>
+                </div>
+            </a>
+            <a href="/public/Games/games.html">
+                <div class="nav-words-outer">
+                    <div class="nav-words-4">
+                        <img src="/public/images/Frame 35.svg" alt="Games Icon">
+                    </div>
+                    <p>Games</p>
+                </div>
+            </a>
+            <a href="/public/AI/chat.html">
+                <div class="nav-words-outer">
+                    <div class="nav-words-5">
+                        <img src="/public/images/ai-chat-icon.svg" alt="AI Chat Icon">
+                    </div>
+                    <p>AI Chat</p>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <div class="chat-container">
+        <div class="selectors-container">
+            <select id="modelSelector" class="model-selector">
+                <option value="llama3">Llama 3</option>
+                <option value="gpt4">GPT-4</option>
+            </select>
+        </div>
+
+        <div class="messages-container" id="messagesContainer">
+            <!-- Messages will be added here dynamically -->
+        </div>
+
+        <form id="chatForm" class="chat-form">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Type your message..."
+                class="chat-input"
+            />
+            <button type="submit" class="chat-button">Send</button>
+        </form>
+    </div>
+
+    <script>
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const modelSelector = document.getElementById('modelSelector');
+        let isFirst = true;
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Add user message
+            addMessage('user', message);
+            chatInput.value = '';
+
+            try {
+                // Show loading message
+                const loadingMessage = addMessage('assistant', 'Thinking...');
+                
+                // Send message to server
+                const response = await fetch('http://localhost:3001/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message,
+                        model: modelSelector.value,
+                        isFirst
+                    }),
+                });
+
+                const data = await response.json();
+                
+                // Remove loading message
+                loadingMessage.remove();
+
+                if (data.success) {
+                    // Add AI response
+                    addMessage('assistant', data.response);
+                    isFirst = false;
+                } else {
+                    addMessage('error', 'Sorry, something went wrong. Please try again.');
+                }
+            } catch (error) {
+                console.error('Chat error:', error);
+                addMessage('error', 'Sorry, something went wrong. Please try again.');
+            }
+        });
+
+        function addMessage(role, content) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            messageDiv.textContent = content;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return messageDiv;
+        }
+    </script>
+</body>
+</html> 

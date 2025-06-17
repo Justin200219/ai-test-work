@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import AIChat from "./components/AIChat";
 import LanguageDetection from "./components/LanguageDetection";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
@@ -7,24 +8,16 @@ function AppContent() {
   const { isLanguageDetected, handleLanguageDetected } = useLanguage();
   
   useEffect(() => {
-    // Check if user has already completed the initial flow
-    const hasCompletedFlow = localStorage.getItem('hasCompletedFlow');
-    if (hasCompletedFlow) {
-      // Redirect to main app
-      window.location.href = '../public/Words.html';
+    if (isLanguageDetected) {
+      window.location.href = '/public/Signup/name_input.html';
     }
-  }, []);
+  }, [isLanguageDetected]);
 
   if (!isLanguageDetected) {
-    return <LanguageDetection onLanguageDetected={() => {
-      handleLanguageDetected();
-      // Store language in localStorage for persistence
-      localStorage.setItem('selectedLanguage', 'en'); // Default to English for now
-      window.location.href = '../public/name_input.html';
-    }} />;
+    return <LanguageDetection onLanguageDetected={handleLanguageDetected} />;
   }
 
-  return null;
+  return null; // Don't render anything after redirection
 }
 
 function App() {

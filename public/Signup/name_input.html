@@ -5,29 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="AI-powered language learning application" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/icons/favicon.ico" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/logo192.png" />
-    <link rel="stylesheet" href="/css/App.css" />
-    <link rel="stylesheet" href="/css/name_input.css" />
-    <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icons/logo192.png" />
+    <link rel="stylesheet" href="/src/App.css" />
+
+    <link rel="stylesheet" href="/src/welcome.css" />
+
+
+    <link rel="stylesheet" href="/src/name_input.css" />
+
     <title>AI Language App</title>
 </head>
 <body>
   <div class="container">
     <div class="content">
+
+      <img src="/images/cow.svg" alt="Klets Cow" class="cow" />
+      <h1>Hello! My name is Klets</h1>
+      <p>I am your personal Dutch teacher! In this app you can learn words, sentences, pronunciation and play fun games!</p>
+
       <img src="/images/cow.svg" alt="Klets Cow" class="cow" />
       <h1>What is your name?</h1>
-      <form class="name-form">
+      <form class="name-form" id="nameForm">
         <input type="text" placeholder="Enter name" class="name-input" required />
+        <button type="submit" class="next-button">Next</button>
       </form>
+
     </div>
-    <button class="next-button">Next</button>
   </div>
+
   <script>
-    window.addEventListener('load', () => {
-      document.body.classList.add('loaded');
+    document.getElementById('nameForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.querySelector('.name-input').value;
+      if (name.trim()) {
+        localStorage.setItem('userName', name);
+        window.location.href = 'welcome.html';
+      }
     });
   </script>
 </body>
