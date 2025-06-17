@@ -17,12 +17,12 @@ const Level1Word2 = () => (
     </div>
 
     <hr className="divider" />
-
-    <div href="/public/Words/Category-Fruit.html" className="sub-header">
+    <div className="sub-header">
       <button className="back-button">
         <Link to="/Words/Fruit-Category/Category-Fruit">
-        <img src="/images/Group 299.svg" alt="Back" />
-        Back
+          <img src="/images/Group 299.svg" alt="Back" />
+          Back
+        </Link>
       </button>
       <div className="progress">
         <div className="progress-bar"></div>

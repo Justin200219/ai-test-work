@@ -53,8 +53,8 @@ const CategoryFruit = () => (
 
         <div className="top-text-path">
         <h1 className="pickLevel">Pick a level</h1>
-            <h2 className="choosetheme">Fruit</h1>
-    </div>    
+            <h2 className="choosetheme">Fruit</h2>
+    </div>
 
     
     <div className="container_path">
