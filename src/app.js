@@ -8,7 +8,10 @@ function AppContent() {
   const { t, isLanguageDetected, handleLanguageDetected } = useLanguage();
   
   if (!isLanguageDetected) {
-    return <LanguageDetection onLanguageDetected={handleLanguageDetected} />;
+    return <LanguageDetection onLanguageDetected={() => {
+      handleLanguageDetected();
+      window.location.href = '/name_input.html';
+    }} />;
   }
 
   return (
@@ -30,3 +33,5 @@ function App() {
 }
 
 export default App;
+
+

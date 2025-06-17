@@ -204,7 +204,17 @@ async function routes(fastify, options) {
 
   fastify.post('/api/chat', async (request, reply) => {
     try {
-      const { message, model = 'llama3', language = 'en', isFirstMessage = false } = request.body;
+      const { message, model = 'llama3', language = 'en', history = [] } = request.body;
+
+      // Format conversation history for the AI
+      const contextMessages = history.map(msg => {
+        if (msg.role === 'user') {
+          return `user: ${msg.content}`;
+        } else if (msg.role === 'assistant') {
+          return `assistant: ${msg.content}`;
+        }
+        return ''; // Should not happen with defined roles
+      }).filter(line => line.length > 0).join('\n');
 
       // Add language context to the prompt
       function findDutchMistakes(text) {
@@ -215,12 +225,10 @@ async function routes(fastify, options) {
         ]);
         return text
           .toLowerCase()
-          .split(/[\s,.!?]+/)
-          .filter((w) => w && !dictionary.has(w))
-          .slice(0, 5);
+          .split(/[\s,.!?]+/).filter((w) => w && !dictionary.has(w)).slice(0, 5);
       }
 
-      const targetLanguage = languageNames[language] || 'English';
+      const targetLanguageName = languageNames[language] || 'English'; // Get full language name for prompt
       let languagePrompt;
       const mistakes = findDutchMistakes(message);
       const misspell = mistakes.length
@@ -228,54 +236,108 @@ async function routes(fastify, options) {
         : '';
 
       if (language === 'nl') {
-        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Geen Engels.`;
+        // For Dutch only, ensure it's just one line, no fluff, no English.
+        languagePrompt = `Jouw GEHELE respons moet PRECIES uit één zin bestaan. Geef een zeer kort en vriendelijk antwoord in het Nederlands op het volgende bericht.${misspell} Geen Engels. Geen andere woorden, geen introductie, geen labels, geen uitleg, geen opmerkingen. ALLEEN de Nederlandse zin.`;
       } else {
-        languagePrompt = `${isFirstMessage ? 'Je bent een docent Nederlands. ' : ''}Antwoord kort in het Nederlands.${misspell} Vertaal daarna naar het ${language}. Geen Engels.`;
+        // For other languages, ensure it's EXACTLY two lines: Dutch then translation, no fluff, no English.
+        languagePrompt = `Jouw GEHELE respons moet PRECIES uit twee regels bestaan. Geef op de EERSTE regel een zeer kort en vriendelijk antwoord in het Nederlands op het volgende bericht.${misspell} Op de TWEEDE regel, geef de vertaling van *diezelfde* Nederlandse zin naar het ${targetLanguageName} (ISO 639-1 code: ${language}). Geen Engels, geen andere talen dan Nederlands en ${targetLanguageName}. Geen andere woorden, geen introductie, geen labels, geen uitleg, geen opmerkingen. ALLEEN de twee gevraagde zinnen.`;
       }
+
+      const fullPrompt = contextMessages ? `${contextMessages}\n\n${languagePrompt} Bericht: ${message}` : `${languagePrompt} Bericht: ${message}`;
 
       const response = await axios.post('http://localhost:11434/api/generate', {
         model: model,
-        prompt: `${languagePrompt} Bericht: ${message}`,
+        prompt: fullPrompt,
         stream: false
       });
 
-      // Get the Dutch response
-      let dutchResponse = response.data.response;
+      // --- Post-processing to extract and clean AI response ---
+      let aiRawResponse = response.data.response.trim();
+      const responseLines = aiRawResponse.split('\n').map(line => line.trim()).filter(line => line.length > 0);
 
-      // Always translate to the user's preferred language if it's not Dutch
+      let dutchResponse = '';
       let translatedResponse = '';
-      if (language !== 'nl') {
-        const translationPrompt = `Vertaal de volgende Nederlandse tekst naar ${language}. Behoud de betekenis en toon. Tekst: ${dutchResponse}`;
-        const translationResponse = await axios.post('http://localhost:11434/api/generate', {
-          model: model,
-          prompt: translationPrompt,
-          stream: false
-        });
-        translatedResponse = translationResponse.data.response;
+
+      if (language === 'nl') {
+        // If Dutch-only, take the first clean line as Dutch response
+        dutchResponse = responseLines[0] || '';
+      } else {
+        // If two languages, try to find Dutch and translated parts more robustly
+        let potentialDutch = '';
+        let potentialTranslated = '';
+
+        // Attempt to find Dutch and translated parts based on structure and content
+        // Prioritize lines that seem to be the actual content over meta-commentary
+        for (const line of responseLines) {
+            const lowerCaseLine = line.toLowerCase();
+            if (lowerCaseLine.includes('vertaling') || lowerCaseLine.includes('translation')) {
+                potentialTranslated = line.replace(/^(vertaling|translation)[:!?.]?\s*/i, '').trim();
+            } else if (!potentialDutch && /[a-z]/i.test(lowerCaseLine) && lowerCaseLine.includes('hallo') && languageNames['nl']) {
+                // Heuristic: if it looks like Dutch and hasn't found Dutch yet
+                potentialDutch = line.trim();
+            } else if (!potentialTranslated && /[^\u0000-\u007F]/.test(lowerCaseLine) && language !== 'en') {
+                // Heuristic: if it contains non-Latin chars and is meant to be a non-English translation
+                potentialTranslated = line.trim();
+            } else if (!potentialDutch && lowerCaseLine.includes('hello') && languageNames['nl']) {
+                // Fallback: If it's a common greeting in Latin script that might be Dutch
+                potentialDutch = line.trim();
+            }
+        }
+
+        // If still not found, take first two lines as a fallback
+        dutchResponse = potentialDutch || responseLines[0] || '';
+        translatedResponse = potentialTranslated || responseLines[1] || '';
+
+        // Aggressive filter for any remaining unwanted text in both parts
+        const aggressiveClean = (text, targetLang) => {
+            if (!text) return '';
+            let cleaned = text.replace(/^(translation|note|explanation|vertaling|nederlandstalig antwoord|here's a breakdown|breakdown)[:!?.]?\s*/i, '').trim();
+
+            // Remove specific English phrases or meta-commentary that might still be present
+            const unwantedPhrases = [
+                'i kept the informal tone',
+                'word order',
+                'common way to ask',
+                'meaning and tone',
+                'breakdown of the translation',
+                'similar to the english phrase',
+                'conveys a sense of well-wishing',
+                'used the first-person singular pronoun',
+                'maintain the same level of familiarity',
+                'marhaba jusatin',
+                'nice to meet you',
+                'it looks like you\'ve provided a dutch text!',
+                'here\'s the translation into arabic',
+                'what a lovely phrase!'
+            ];
+
+            // Filter sentences that contain unwanted phrases or appear to be English when target is not English
+            const sentences = cleaned.split(/\s*\.\s*/).filter(s => s.trim().length > 0); // Split by period followed by space
+            const filteredSentences = sentences.filter(s => {
+                const lowerCaseSentence = s.toLowerCase();
+                // Remove if it's explicitly an unwanted phrase
+                if (unwantedPhrases.some(phrase => lowerCaseSentence.includes(phrase))) return false;
+
+                // Aggressively remove if it looks like English and the target language is not English
+                if (targetLang !== 'en' && /[a-z]/i.test(lowerCaseSentence)) {
+                    // Heuristic: count common English words. If too many, likely English.
+                    const englishWords = ['the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'to', 'of', 'and', 'in', 'that', 'have', 'it', 'for', 'on', 'with', 'as', 'do', 'at', 'this', 'but', 'by', 'from', 'or', 'i', 'you', 'he', 'she', 'we', 'they', 'will', 'would', 'can', 'could'];
+                    const wordsInSentence = lowerCaseSentence.split(/\s+/);
+                    const englishWordCount = wordsInSentence.filter(word => englishWords.includes(word)).length;
+                    if (englishWordCount > (wordsInSentence.length * 0.4)) {
+                        return false; // Likely English, filter it out
+                    }
+                }
+                return true;
+            });
+
+            return filteredSentences.join('. ').replace(/\s+/g, ' ').trim();
+        };
+
+        dutchResponse = aggressiveClean(dutchResponse, 'nl');
+        translatedResponse = aggressiveClean(translatedResponse, language);
       }
-
-      // --- Post-processing to clean AI response --- 
-      const cleanResponse = (text) => {
-        if (!text) return '';
-        const lines = text.split('\n');
-        const filteredLines = lines.filter(line => {
-          const lowerCaseLine = line.toLowerCase();
-          return !( 
-            lowerCaseLine.includes('note:') || 
-            lowerCaseLine.includes('here\'s a breakdown') || 
-            lowerCaseLine.includes('explanation:') || 
-            lowerCaseLine.includes('translation into') || 
-            lowerCaseLine.includes('nederlandstalig antwoord') || 
-            lowerCaseLine.includes('vertaling naar') ||
-            lowerCaseLine.includes('breakdown')
-          );
-        });
-        return filteredLines.join(' ').replace(/\s+/g, ' ').trim();
-      };
-
-      dutchResponse = cleanResponse(dutchResponse);
-      translatedResponse = cleanResponse(translatedResponse);
-      // --- End post-processing --- 
+      // --- End post-processing ---
 
       return {
         success: true,

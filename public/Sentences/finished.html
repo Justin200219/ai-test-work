@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="AI-powered language learning application" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/logo192.png" />
+  <link rel="stylesheet" href="../../src/pronoun-word.css" />
+  <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">
+
+  <title>AI Language App</title>
+</head>
+
+<body>
+  <div class="containerimg">
+    <img src="/public/images/Welldoneimg.svg" alt="">
+    <a href="/public/Path2.html"><button class="finishBtn">Next level</button></a>
+    <audio id="finishAudio" src="/public/word-sounds/correct-answer.mp3"></audio>
+  </div>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      const audio = document.getElementById('finishAudio');
+      audio.play();
+    });
+  </script>
+</body>
+
+</html>

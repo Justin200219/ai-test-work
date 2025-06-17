@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { aiService } from '../services/aiService';
 import { useLanguage } from '../contexts/LanguageContext';
+import { fetchTranslation } from './TranslationService';
 import './AIChat.css';
 
 const AIChat = () => {
@@ -53,7 +54,15 @@ const AIChat = () => {
         isFirst
       );
       if (response.success) {
-        setMessages(prev => [...prev, { role: 'assistant', content: response.response }]);
+        const assistantMessageContent = response.response;
+        // Fetch translation for the assistant's message
+        const translatedAssistantContent = await fetchTranslation(assistantMessageContent, selectedLanguage);
+
+        setMessages(prev => [...prev, {
+          role: 'assistant',
+          content: assistantMessageContent,
+          translatedContent: translatedAssistantContent // Store the translation
+        }]);
         setIsFirst(false);
       }
     } catch (error) {
@@ -86,6 +95,11 @@ const AIChat = () => {
             className={`message ${message.role}`}
           >
             {message.content}
+            {message.role === 'assistant' && message.translatedContent && (
+              <div className="translation-content">
+                {message.translatedContent}
+              </div>
+            )}
           </div>
         ))}
         {isLoading && (

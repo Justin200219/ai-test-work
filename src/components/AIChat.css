@@ -54,6 +54,14 @@
   background-color: #ffebee;
 }
 
+.translation-content {
+  font-size: 0.8em;
+  color: #555;
+  margin-top: 0.5em;
+  border-top: 1px solid #eee;
+  padding-top: 0.5em;
+}
+
 .chat-form {
   display: flex;
   gap: 0.5rem;

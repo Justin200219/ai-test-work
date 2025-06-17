@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="AI-powered language learning application" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/icons/favicon.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/logo192.png" />
+    <link rel="stylesheet" href="/src/Language_settings.css" />
+    <link href="https://fonts.googleapis.com/css?family=Baloo&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet">
+    <title>AI Language App</title>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+
+      <h1>What language do you speak?</h1>
+            <button id="closeBtn" class="close-button">× back</button>
+
+      <div class="language-list">
+        <button class="language-item">
+          <img src="/public/images/204-saudi arabia.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Arabic</span>
+            <span class="language-sub">العربية</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/213-romania.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Turkish</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <div class="emptyimg"></div>
+          <div class="language-text">
+            <span class="language-label">Kurdish</span>
+            <span class="language-sub">کوردی</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <div class="emptyimg"></div>
+          <div class="language-text">
+            <span class="language-label">Kurdish</span>
+            <span class="language-sub">سۆرانی</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/051-eritrea.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Tigrinia</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/063-somalia.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Somalian</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/230-spain.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Spanish</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/232-pakistan.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Urdu</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/200-iran.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Farsi</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/134-bangladesh.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Bengali</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/Group 179.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Chinese</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/262-ethiopia.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Amharic</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/Group 180.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Russian</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/198-ukraine.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Ukrainian</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/055-india.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Punjabi (India)</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/232-pakistan.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">Punjabi</span>
+            <span class="language-sub">پنجابی</span>
+          </div>
+        </button>
+
+        <button class="language-item">
+          <img src="/public/images/110-united kingdom.svg" alt="" class="language-icon" />
+          <div class="language-text">
+            <span class="language-label">English</span>
+          </div>
+        </button>
+      </div>
+
+    <button class="next-button" onclick="window.location.href='/public/Signup/name_input.html'">Next</button>
+  </div>
+  <script>
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    const closeBtn = document.getElementById('closeBtn');
+
+    closeBtn.addEventListener('click', () => {
+      document.body.classList.add('closing');
+
+      setTimeout(() => {
+        history.back();
+      }, 500);  // duur van animatie
+    });
+
+    // Voor de inkomende animatie als je wilt, zoals jij nu hebt:
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+  </script>
+</body>
+</html>

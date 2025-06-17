@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="AI-powered language learning application" />
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/icons/favicon.ico" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/icons/logo192.png" />
+  <link rel="stylesheet" href="../src/word_learning.css" />
+  <title>AI Language App</title>
+</head>
+<body>
+  <div class="container">
+    <!-- NEW TOP HEADER -->
+    <div class="top-header">
+      <h1>Words</h1>
+      <button class="lang-button">
+        <img
+          class="flag"
+          src="../public/images/110-united kingdom.svg"
+          alt="English"
+        />
+        English
+      </button>
+    </div>
+
+    <!-- GREY DIVIDER -->
+    <hr class="divider" />
+
+    <!-- SUB‐HEADER WITH BACK + PROGRESS -->
+    <div class="sub-header">
+      <button class="back-button">
+        <img src="../public/images/Group 299.svg" alt="Back" />
+        Back
+      </button>
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="content">
+      <h2>Finish the sentence</h2>
+
+      <!-- IMAGE OF THE FRUIT -->
+      <div class="big-cow-sentence">
+        <img
+          src="../public/images\orange big cow.svg"
+          alt="Orange"
+        />
+      </div>
+
+      <!-- TARGET WORD (what the user sees under the image) -->
+<div class="sentence" data-correct="Sinaasappel">
+  <h4>Ik</h4>
+  <hr class="orange-vertical-dotted-line">
+
+</div>
+
+<div class="sentence-translation">
+  <h4>Ik</h4>
+  <hr class="orange-vertical-dotted-line">
+
+</div>
+          
+
+      <!-- NEW: FOUR OPTION BOXES IN A 2×2 GRID -->
+      <div class="options">
+        <button class="option-box">Aardbei</button>
+        <button class="option-box">Sinaasappel</button>
+        <button class="option-box">Appel</button>
+        <button class="option-box">Banaan</button>
+        <button class="option-box">Appel</button>
+        <button class="option-box">Banaan</button>
+      </div>
+      
+    </main>
+
+    <!-- Footer Buttons -->
+    <div class="footer">
+      <a href="pronoun-word4.html" class="btn next-btn">Check</a>
+    </div>
+  </div>
+
+  <script src="../src/word_learning.js"></script>
+</body>
+</html>
