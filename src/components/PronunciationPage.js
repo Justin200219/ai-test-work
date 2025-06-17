@@ -25,42 +25,42 @@ const PronunciationPage = () => {
 
         <div className="container_categories">
           <Link to="/pronunciation/familie">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/👨‍👩‍👧‍👦.png" alt="" />
               <h3>Familie</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/pronunciation/huis">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/🏠.png" alt="" />
               <h3>Huis</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/pronunciation/supermarkt">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/🛒.png" alt="" />
               <h3>Supermarkt</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/pronunciation/restaurant">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/🍝.png" alt="" />
               <h3>Restaurant</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/pronunciation/school">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/📗.png" alt="" />
               <h3>School</h3>
               <p>5 levels</p>
             </div>
           </Link>
           <Link to="/pronunciation/tijddagen">
-            <div className="card">
+            <div className="topic-card topic-card-orange">
               <img src="/images/🕐.png" alt="" />
               <h3>Tijd / Dagen</h3>
               <p>5 levels</p>
