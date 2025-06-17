@@ -10,6 +10,7 @@ const LanguageDetection = ({ onLanguageDetected }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Attempting language detection...');
     if (!input.trim()) return;
 
     setIsLoading(true);
@@ -23,8 +24,12 @@ const LanguageDetection = ({ onLanguageDetected }) => {
       });
 
       const data = await response.json();
+      console.log('API Response Data:', data);
       if (data.success && data.language) {
+        console.log('Language detected:', data.language);
         onLanguageDetected(data.language);
+      } else {
+        console.log('Language detection failed or no language returned.', data);
       }
     } catch (error) {
       console.error('Language detection failed:', error);
