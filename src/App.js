@@ -11,7 +11,7 @@ function AppContent() {
     const hasCompletedFlow = localStorage.getItem('hasCompletedFlow');
     if (hasCompletedFlow) {
       // Redirect to main app
-      window.location.href = '../public/words_pages/Words_home.html';
+      window.location.href = '../public/Words.html';
     }
   }, []);
 
