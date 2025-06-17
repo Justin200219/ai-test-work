@@ -3,9 +3,6 @@ import { useLanguage } from '../contexts/LanguageContext';
 import RotatingLanguageMessage from './RotatingLanguageMessage';
 import './LanguageDetection.css';
 
-const API_URL =
-  process.env.REACT_APP_API_URL?.replace(/\/$/, '') || 'http://localhost:3001';
-
 const LanguageDetection = ({ onLanguageDetected }) => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +14,7 @@ const LanguageDetection = ({ onLanguageDetected }) => {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/detect-language`, {
+      const response = await fetch('http://localhost:3001/api/detect-language', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

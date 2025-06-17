@@ -146,6 +146,7 @@
       </div>
 
     <button class="next-button" onclick="window.location.href='/public/Signup/name_input.html'">Next</button>
+    <button onclick="resetFlow()" class="reset-button">Reset App Flow</button>
   </div>
   <script>
     window.addEventListener('load', () => {
@@ -166,6 +167,13 @@
     window.addEventListener('load', () => {
       document.body.classList.add('loaded');
     });
+
+    function resetFlow() {
+        localStorage.removeItem('hasCompletedFlow');
+        localStorage.removeItem('userName');
+        localStorage.removeItem('selectedLanguage');
+        window.location.href = '../index.html';
+    }
 
   </script>
 </body>
