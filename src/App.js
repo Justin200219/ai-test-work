@@ -8,6 +8,7 @@ import WordsPage from './components/WordsPage';
 import PronunciationPage from './components/PronunciationPage';
 import SentencesPage from './components/SentencesPage';
 import GamesPage from './components/GamesPage';
+import Finished from './Words/Finished';
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
 
@@ -36,6 +37,7 @@ function AppContent() {
           <Route path="/name-input" element={<NameInputPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/words" element={<WordsPage />} />
+          <Route path="/Words/finished" element={<Finished />} />
           <Route path="/pronunciation" element={<PronunciationPage />} />
           <Route path="/sentences" element={<SentencesPage />} />
           <Route path="/games" element={<GamesPage />} />
