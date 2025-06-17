@@ -8,6 +8,10 @@ import WordsPage from './components/WordsPage';
 import PronunciationPage from './components/PronunciationPage';
 import SentencesPage from './components/SentencesPage';
 import GamesPage from './components/GamesPage';
+import Finished from './Words/Finished';
+import CategoryFruit from "./Words/FruitCategory/CategoryFruit";
+import Level1Word1 from "./Words/FruitCategory/Levels/Level1Word1";
+import Level1Word2 from "./Words/FruitCategory/Levels/Level1Word2";
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import './App.css';
 
@@ -36,6 +40,10 @@ function AppContent() {
           <Route path="/name-input" element={<NameInputPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/words" element={<WordsPage />} />
+          <Route path="/Words/finished" element={<Finished />} />
+          <Route path="/Words/Fruit-Category/Category-Fruit" element={<CategoryFruit />} />
+          <Route path="/Words/Fruit-Category/Levels/Level-1-word-1" element={<Level1Word1 />} />
+          <Route path="/Words/Fruit-Category/Levels/Level-1-word-2" element={<Level1Word2 />} />
           <Route path="/pronunciation" element={<PronunciationPage />} />
           <Route path="/sentences" element={<SentencesPage />} />
           <Route path="/games" element={<GamesPage />} />
