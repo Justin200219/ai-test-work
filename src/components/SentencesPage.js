@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BottomNav from './BottomNav';
 import '../style.css';
 import '../Sentences.css';
 import '../navigation.css';
@@ -7,13 +8,6 @@ import '../navigation.css';
 const SentencesPage = () => {
   return (
     <div>
-      <nav className="navbar">
-        <Link to="/words">Words</Link>
-        <Link to="/pronunciation">Pronunciation</Link>
-        <Link to="/sentences">Sentences</Link>
-        <Link to="/games">Games</Link>
-        <Link to="/ai-chat">AI Chat</Link>
-      </nav>
 
       <div className="top-header">
         <div className="categorie/img"></div>
@@ -73,6 +67,7 @@ const SentencesPage = () => {
           </Link>
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 };

@@ -1,18 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import BottomNav from './BottomNav';
 import '../choose_game.css';
 import '../navigation.css'; // Assuming navigation.css is needed for the navbar
 
 const GamesPage = () => {
   return (
     <div>
-      <nav className="navbar">
-        <Link to="/words">Words</Link>
-        <Link to="/pronunciation">Pronunciation</Link>
-        <Link to="/sentences">Sentences</Link>
-        <Link to="/games">Games</Link>
-        <Link to="/ai-chat">AI Chat</Link>
-      </nav>
 
       <div className="top-header">
         <div className="categorie/img"></div>
@@ -43,6 +37,7 @@ const GamesPage = () => {
           <h3 className="game-label">Memory</h3>
         </div>
       </div>
+      <BottomNav />
     </div>
   );
 };
