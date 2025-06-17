@@ -13,7 +13,29 @@ export const translations = {
     detectLanguageDescription: 'Please enter a sentence of at least 5 words in your native language to help us detect your preferred language.',
     enterWord: 'Enter a word...',
     detect: 'Detect Language',
-    detecting: 'Detecting...'
+    detecting: 'Detecting...',
+    askName: 'What is your name?',
+    enterName: 'Enter your name...',
+    continue: 'Continue',
+    welcome: 'Welcome',
+    startChat: 'Start Chat'
+  },
+  nl: {
+    appTitle: 'AI Taal Leer Assistent',
+    typeMessage: 'Typ je bericht...',
+    send: 'Verstuur',
+    thinking: 'Denken...',
+    error: 'Kon geen reactie van AI krijgen',
+    detectLanguageTitle: 'Welkom bij AI Taal Leren',
+    detectLanguageDescription: 'Voer een zin van minstens 5 woorden in je moedertaal in zodat we je voorkeurstaal kunnen detecteren.',
+    enterWord: 'Voer een woord in...',
+    detect: 'Detecteer Taal',
+    detecting: 'Detecteren...',
+    askName: 'Wat is je naam?',
+    enterName: 'Voer je naam in...',
+    continue: 'Verder',
+    welcome: 'Welkom',
+    startChat: 'Start Chat'
   },
   ar: {
     appTitle: 'مساعد تعلم اللغات بالذكاء الاصطناعي',
