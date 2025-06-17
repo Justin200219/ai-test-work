@@ -237,6 +237,9 @@ export const LanguageProvider = ({ children }) => {
   const [selectedLanguage, setSelectedLanguage] = useState(() =>
     localStorage.getItem('selectedLanguage') || 'en'
   );
+  const [userName, setUserName] = useState(() =>
+    localStorage.getItem('userName') || ''
+  );
   const [isLanguageDetected, setIsLanguageDetected] = useState(() =>
     localStorage.getItem('isLanguageDetected') === 'true'
   );
@@ -255,13 +258,19 @@ export const LanguageProvider = ({ children }) => {
   }, [selectedLanguage]);
 
   useEffect(() => {
+    localStorage.setItem('userName', userName);
+  }, [userName]);
+
+  useEffect(() => {
     localStorage.setItem('isLanguageDetected', isLanguageDetected);
   }, [isLanguageDetected]);
 
   return (
-    <LanguageContext.Provider value={{ 
-      selectedLanguage, 
-      setSelectedLanguage, 
+    <LanguageContext.Provider value={{
+      selectedLanguage,
+      setSelectedLanguage,
+      userName,
+      setUserName,
       t,
       isLanguageDetected,
       handleLanguageDetected
