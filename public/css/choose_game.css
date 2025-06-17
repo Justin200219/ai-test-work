@@ -1,0 +1,337 @@
+words.css
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* Pronunciation home page*/
+body * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+}
+
+html{
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.choosetheme{
+    display: flex;
+    justify-content: center;
+    font-family: 'baloo', sans-serif;
+    margin-top: 2%;
+}
+.container {
+    /* flex-direction: column; */
+    justify-content: space-between;
+    /* padding: 40px 20px; */
+    max-width: auto;
+    width: 100%;
+    height: auto;
+}
+
+.container_categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    width: 100%;
+    /* background-color: pink; */
+    padding-top: 30px;
+    
+}
+
+.card {
+    width: 12rem;
+    height: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    background-color: #FD7F0E;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    font-family: 'Baloo', sans-serif;
+    color: whitesmoke;
+    font-size: 1.25rem;
+    padding: 15px;
+    border: 1px	 solid #d36300;
+}
+
+
+.card:hover {
+    transform: translateY(+5px);
+    transition: all 0.5s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card h3 {
+    color: #FFF;
+    text-align: center;
+    font-family: Baloo;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.card p {
+    color: #FFF;
+    text-align: right;
+    font-family: 'Inter';
+    font-size: 0.8375rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+img {
+    width: 45px;
+    height: 45px;
+}
+
+/* Top header: title + language selector */
+
+
+
+.top-header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #F2F2F2;
+}
+.top-header h1 {
+  font-size: 24px;
+  font-weight: 900;
+  margin-right: 1rem;
+  color: #333;
+  font-family: 'Baloo', sans-serif;
+ }
+
+
+.lang-button {
+  display: flex;
+  margin-left: auto;
+  margin-right: 0;
+  background: #f0f4ff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: 'Baloo', sans-serif;
+}
+.lang-button .flag {
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+}
+
+.nav-words-4{
+
+    border: 2px solid #FFC105;
+}
+
+.nav-words-outer-4 p {
+font-family: inter;
+    font-size: 14px;
+    font-weight: 100;
+    color: #FFC105;
+    margin-top: 8px;
+}
+
+.nav_container{
+    display: flex;
+    justify-content: space-evenly;
+}
+.nav-words-1{
+background-color: #E3F7FE;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-words-2{
+background-color: #FFF1E5;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-words-3{
+background-color: #F0F9E3;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-words-4{
+background-color: #FFF8E4;
+    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-words-outer, .nav-words-outer-1, .nav-words-outer-2, .nav-words-outer-3, .nav-words-outer-4 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-words-outer p {
+font-family: inter;
+    font-size: 14px;
+    font-weight: 100;
+    color: #646464;
+    margin-top: 8px;
+}
+
+nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: #fff;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the .nav_container */
+    border-top: 1px solid #F2F2F2;
+}
+
+.nav_container {
+    display: flex;
+    justify-content: space-evenly; /* Change from space-evenly */
+    width: 100%; /* Ensure it fills the nav */
+}
+
+/* Container that holds the two boxes */
+.container_categories {
+  display: flex;
+  flex-direction: column;    
+  justify-content: center;  
+  align-items: center;      
+  height: calc(100vh - 200px); 
+  gap: 2.5rem;              
+  padding: 20px 0;           
+  overflow: hidden;         
+}
+
+/* Each individual game + label */
+.game-item {
+  text-align: center;
+}
+
+/* Card-only image box */
+.card {
+  width: 230px;
+  height: 230px;
+  background: #E1FFCB;        
+  border-radius: 16px;
+  border: none;
+  border-bottom: 6px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Snake card: light green background + darker green bottom border */
+.card-snake {
+  background: #E1FFCB;
+}
+
+/* Memory card: light red background + pink bottom border */
+.card-memory {
+  background: #FFD7D7;
+}
+
+/* Hover / tap feedback */
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+}
+
+/* Image sizing */
+.card img {
+  width: 160px;
+  height: 160px;
+  object-fit: contain;
+}
+
+/* Label below the card */
+.game-label {
+  margin-top: 0.75rem;
+  font-family: 'Baloo', sans-serif;
+  font-size: 1.25rem;
+  color: #333333;
+}
+
+/* Make the entire area clickable without underlines */
+.card-link {
+  text-decoration: none;
+  display: inline-block; /* shrink-wrap the .card */
+}
