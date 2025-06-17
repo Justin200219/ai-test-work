@@ -1,12 +1,14 @@
 import React from "react";
 import AIChat from "./components/AIChat";
 import LanguageDetection from "./components/LanguageDetection";
+
 import NameInput from "./components/NameInput";
 import Welcome from "./components/Welcome";
 import WordsPage from "./components/WordsPage";
 import PronunciationPage from "./components/PronunciationPage";
 import SentencesPage from "./components/SentencesPage";
 import GamesPage from "./components/GamesPage";
+
 import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
