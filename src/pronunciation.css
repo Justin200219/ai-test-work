@@ -88,8 +88,8 @@ a {
 }
 
 .card {
-    width: 9rem;
-    height: 9rem;
+    width: 7rem;
+    height: 7rem;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -133,8 +133,8 @@ a {
 }
 
 img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
 }
 
 /* Top header: title + language selector */

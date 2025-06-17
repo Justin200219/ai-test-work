@@ -33,6 +33,10 @@ const BottomNav = () => {
           </div>
           <p>Games</p>
         </Link>
+        <Link to="/ai-chat" className={`nav-words-outer ${pathname.startsWith('/ai-chat') ? 'nav-words-outer-5' : ''}`}>
+          <div className="nav-words-5">AI</div>
+          <p>AI Chat</p>
+        </Link>
       </div>
     </nav>
   );

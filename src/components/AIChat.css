@@ -90,4 +90,17 @@
 
 .chat-button:hover:not(:disabled) {
   background-color: #1976d2;
-} 
+}
+
+/* Bottom navigation highlight */
+.nav-words-5 {
+  border: 2px solid #FF3B30;
+}
+
+.nav-words-outer-5 p {
+  font-family: inter;
+  font-size: 14px;
+  font-weight: 100;
+  color: #FF3B30;
+  margin-top: 8px;
+}
