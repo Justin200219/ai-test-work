@@ -1,6 +1,9 @@
+const API_URL =
+  process.env.REACT_APP_API_URL?.replace(/\/$/, '') || 'http://localhost:3001';
+
 export const fetchTranslation = async (word, targetLanguage) => {
   try {
-    const response = await fetch('http://localhost:3001/translate', {
+    const response = await fetch(`${API_URL}/translate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
