@@ -24,8 +24,8 @@ const WordsPage = () => {
         <h2 className="choosetheme">Choose a topic</h2>
         <div className="container_categories">
           <Link to="/Words/Fruit-Category/Category-Fruit">
-            <div className="card">
-              <img src="/images/🍇.png" alt="" />
+            <div className="topic-card topic-card-blue">
+              <img src="/images/apple.svg" alt="" />
               <h3>Fruit</h3>
               <p>5 levels</p>
             </div>
@@ -72,4 +72,4 @@ const WordsPage = () => {
   );
 };
 
-export default WordsPage; 
+export default WordsPage;

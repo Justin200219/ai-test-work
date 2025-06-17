@@ -24,48 +24,48 @@ const PronunciationPage = () => {
         <h2 className="choosetheme">Choose a topic</h2>
 
         <div className="container_categories">
-          <Link to="/Words/Fruit-Category/Category-Fruit">
-            <div className="card">
-              <img src="/images/🍇.png" alt="" />
+          {/* Family card - link updated to match actual structure */}
+          <Link to="/Pronunciation/Family-Category/Category-Family">
+            <div className="topic-card topic-card-orange">
+              <img src="/images/family.png" alt="Family" />
+              <h3>Family</h3>
+              <p>5 levels</p>
+            </div>
+          </Link>
+          {/* Fruit card - link updated to match actual structure */}
+          <Link to="/Pronunciation/FruitCategory/CategoryFruit">
+            <div className="topic-card topic-card-orange">
+              <img src="/images/apple.svg" alt="Fruit" />
               <h3>Fruit</h3>
               <p>5 levels</p>
             </div>
           </Link>
-          <Link to="/pronunciation/huis">
-            <div className="topic-card topic-card-orange">
-              <img src="/images/🏠.png" alt="" />
-              <h3>Huis</h3>
-              <p>5 levels</p>
-            </div>
-          </Link>
-          <Link to="/pronunciation/supermarkt">
-            <div className="topic-card topic-card-orange">
-              <img src="/images/🛒.png" alt="" />
-              <h3>Supermarkt</h3>
-              <p>5 levels</p>
-            </div>
-          </Link>
-          <Link to="/pronunciation/restaurant">
-            <div className="topic-card topic-card-orange">
-              <img src="/images/🍝.png" alt="" />
-              <h3>Restaurant</h3>
-              <p>5 levels</p>
-            </div>
-          </Link>
-          <Link to="/pronunciation/school">
-            <div className="topic-card topic-card-orange">
-              <img src="/images/📗.png" alt="" />
-              <h3>School</h3>
-              <p>5 levels</p>
-            </div>
-          </Link>
-          <Link to="/pronunciation/tijddagen">
-            <div className="topic-card topic-card-orange">
-              <img src="/images/🕐.png" alt="" />
-              <h3>Tijd / Dagen</h3>
-              <p>5 levels</p>
-            </div>
-          </Link>
+          {/* Other categories - disabled since no files exist */}
+          <div className="topic-card topic-card-orange topic-card-disabled">
+            <img src="/images/🏠.png" alt="Huis" />
+            <h3>Huis</h3>
+            <p>Coming soon</p>
+          </div>
+          <div className="topic-card topic-card-orange topic-card-disabled">
+            <img src="/images/🛒.png" alt="Supermarkt" />
+            <h3>Supermarkt</h3>
+            <p>Coming soon</p>
+          </div>
+          <div className="topic-card topic-card-orange topic-card-disabled">
+            <img src="/images/🍝.png" alt="Restaurant" />
+            <h3>Restaurant</h3>
+            <p>Coming soon</p>
+          </div>
+          <div className="topic-card topic-card-orange topic-card-disabled">
+            <img src="/images/📗.png" alt="School" />
+            <h3>School</h3>
+            <p>Coming soon</p>
+          </div>
+          <div className="topic-card topic-card-orange topic-card-disabled">
+            <img src="/images/🕐.png" alt="Tijd / Dagen" />
+            <h3>Tijd / Dagen</h3>
+            <p>Coming soon</p>
+          </div>
         </div>
       </div>
       <BottomNav />
@@ -73,4 +73,4 @@ const PronunciationPage = () => {
   );
 };
 
-export default PronunciationPage; 
+export default PronunciationPage;

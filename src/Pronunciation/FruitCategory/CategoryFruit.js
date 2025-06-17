@@ -1,30 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../Words.css';
+import '../../pronunciation.css';
 
-const FLOWER_WIDTH = 100; // Adjust this to the width of one flower in your PNG
-const FLOWER_HEIGHT = 130; // Adjust this to the height of the flower area
-
-// Position for the second flower (adjust left/top as needed for your image)
-const SECOND_FLOWER_LEFT = 120; // px, adjust to match your Levelpad2.png
-const SECOND_FLOWER_TOP = 0;    // px, adjust if needed
+const FLOWER_WIDTH = 100;
+const FLOWER_HEIGHT = 130;
 
 const CategoryFruit = () => {
-  // Read the flag from localStorage
-  const levelpadFlag = typeof window !== 'undefined' ? localStorage.getItem('fruitLevelpad') : null;
-  const levelpadImg = levelpadFlag === '2' ? '/images/Levelpad2.png' : '/images/Levelpad1.png';
+  // Check localStorage for the flag to show the open flower
+  const [levelpadImg, setLevelpadImg] = useState('/images/Levelpad1.png');
 
-  // Optionally clear the flag so it only shows Levelpad2.png once
-  if (levelpadFlag === '2') {
-    localStorage.removeItem('fruitLevelpad');
-  }
+  useEffect(() => {
+    const flag = localStorage.getItem('fruitLevelpad');
+    if (flag === '2') {
+      setLevelpadImg('/images/Levelpad2.png');
+      localStorage.removeItem('fruitLevelpad'); // Optionally clear the flag after showing
+    }
+  }, []);
 
   return (
     <div className="category-fruit-page">
       {/* Header */}
       <div className="top-header">
         <div className="categorie-img"></div>
-        <h1>Words</h1>
+        <h1>Pronunciation</h1>
         <img src="/images/Pronunciation_Icon.svg" alt="Pronunciation Icon" className="top-icon" />
         <button
           onClick={() => window.location.href = '/Language_settings.html'}
@@ -38,20 +36,20 @@ const CategoryFruit = () => {
       {/* Navigation */}
       <nav>
         <div className="nav_container">
-          <Link to="/words">
-            <div className="nav-words-outer">
-              <div className="nav-words-1">
-                <img src="/images/Frame 32.svg" alt="Words Icon" />
-              </div>
-              <p>Words</p>
-            </div>
-          </Link>
           <Link to="/pronunciation">
             <div className="nav-words-outer-2">
               <div className="nav-words-2">
                 <img src="/images/Frame 33.svg" alt="Pronunciation Icon" />
               </div>
               <p>Pronunciation</p>
+            </div>
+          </Link>
+          <Link to="/words">
+            <div className="nav-words-outer">
+              <div className="nav-words-1">
+                <img src="/images/Frame 32.svg" alt="Words Icon" />
+              </div>
+              <p>Words</p>
             </div>
           </Link>
           <Link to="/sentences">
@@ -77,16 +75,16 @@ const CategoryFruit = () => {
         <h2 className="choosetheme">Fruit</h2>
       </div>
 
-      {/* PNG Path with clickable first flower */}
+      {/* Path image with clickable flower */}
       <div className="container_path" style={{ position: 'relative' }}>
         <img
           src={levelpadImg}
           alt="Level pad"
           className="levelpad-image"
+          draggable={false}
         />
-        {/* First flower hotspot (always clickable) */}
         <Link
-          to="/Words/Fruit-Category/Levels/Level-1-word-1"
+          to="/Pronunciation/Fruit-Category/Levels/Level-1-word-1"
           className="flower-hotspot"
           style={{
             position: 'absolute',
@@ -97,28 +95,9 @@ const CategoryFruit = () => {
             zIndex: 2,
             cursor: 'pointer',
             background: 'rgba(0,0,0,0)',
-            pointerEvents: levelpadFlag === '2' ? 'none' : 'auto', // disable after level 1
           }}
           aria-label="Go to Level 1"
         />
-        {/* Second flower hotspot (only clickable if on level 2) */}
-        {levelpadFlag === '2' && (
-          <Link
-            to="/Words/Fruit-Category/Levels/Level-2-word-1"
-            className="flower-hotspot"
-            style={{
-              position: 'absolute',
-              left: SECOND_FLOWER_LEFT,
-              top: SECOND_FLOWER_TOP,
-              width: FLOWER_WIDTH,
-              height: FLOWER_HEIGHT,
-              zIndex: 2,
-              cursor: 'pointer',
-              background: 'rgba(0,0,0,0)',
-            }}
-            aria-label="Go to Level 2"
-          />
-        )}
       </div>
     </div>
   );

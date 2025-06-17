@@ -1,30 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../../Words.css';
+import '../../pronunciation.css';
 
-const FLOWER_WIDTH = 100; // Adjust this to the width of one flower in your PNG
-const FLOWER_HEIGHT = 130; // Adjust this to the height of the flower area
+const FLOWER_WIDTH = 100;
+const FLOWER_HEIGHT = 130;
 
-// Position for the second flower (adjust left/top as needed for your image)
-const SECOND_FLOWER_LEFT = 120; // px, adjust to match your Levelpad2.png
-const SECOND_FLOWER_TOP = 0;    // px, adjust if needed
+const CategoryFamily = () => {
+  // Check localStorage for the flag to show the correct levelpad image
+  const [levelpadImg, setLevelpadImg] = useState('/images/Levelpad1.png');
 
-const CategoryFruit = () => {
-  // Read the flag from localStorage
-  const levelpadFlag = typeof window !== 'undefined' ? localStorage.getItem('fruitLevelpad') : null;
-  const levelpadImg = levelpadFlag === '2' ? '/images/Levelpad2.png' : '/images/Levelpad1.png';
-
-  // Optionally clear the flag so it only shows Levelpad2.png once
-  if (levelpadFlag === '2') {
-    localStorage.removeItem('fruitLevelpad');
-  }
+  useEffect(() => {
+    const flag = localStorage.getItem('familyLevelpad');
+    if (flag === '2') {
+      setLevelpadImg('/images/Levelpad2.png');
+    } else if (flag === '3') {
+      setLevelpadImg('/images/Levelpad3.svg');
+    } else {
+      setLevelpadImg('/images/Levelpad1.png');
+    }
+  }, []);
 
   return (
-    <div className="category-fruit-page">
+    <div className="category-family-page">
       {/* Header */}
       <div className="top-header">
         <div className="categorie-img"></div>
-        <h1>Words</h1>
+        <h1>Pronunciation</h1>
         <img src="/images/Pronunciation_Icon.svg" alt="Pronunciation Icon" className="top-icon" />
         <button
           onClick={() => window.location.href = '/Language_settings.html'}
@@ -74,19 +75,20 @@ const CategoryFruit = () => {
       {/* Title */}
       <div className="top-text-path">
         <h1 className="pickLevel">Pick a level</h1>
-        <h2 className="choosetheme">Fruit</h2>
+        <h2 className="choosetheme">Family</h2>
       </div>
 
-      {/* PNG Path with clickable first flower */}
+      {/* Path image with clickable flower */}
       <div className="container_path" style={{ position: 'relative' }}>
         <img
           src={levelpadImg}
           alt="Level pad"
           className="levelpad-image"
+          draggable={false}
         />
         {/* First flower hotspot (always clickable) */}
         <Link
-          to="/Words/Fruit-Category/Levels/Level-1-word-1"
+          to="/Pronunciation/Family-Category/Levels/Level-1-word-1"
           className="flower-hotspot"
           style={{
             position: 'absolute',
@@ -97,19 +99,18 @@ const CategoryFruit = () => {
             zIndex: 2,
             cursor: 'pointer',
             background: 'rgba(0,0,0,0)',
-            pointerEvents: levelpadFlag === '2' ? 'none' : 'auto', // disable after level 1
           }}
           aria-label="Go to Level 1"
         />
-        {/* Second flower hotspot (only clickable if on level 2) */}
-        {levelpadFlag === '2' && (
+        {/* Second flower hotspot (only clickable if Levelpad2 is shown) */}
+        {levelpadImg === '/images/Levelpad2.png' && (
           <Link
-            to="/Words/Fruit-Category/Levels/Level-2-word-1"
+            to="/Pronunciation/Family-Category/Levels/Level-2-word-1"
             className="flower-hotspot"
             style={{
               position: 'absolute',
-              left: SECOND_FLOWER_LEFT,
-              top: SECOND_FLOWER_TOP,
+              left: 120, // adjust as needed for correct flower position
+              top: 0,    // adjust as needed for correct flower position
               width: FLOWER_WIDTH,
               height: FLOWER_HEIGHT,
               zIndex: 2,
@@ -124,4 +125,4 @@ const CategoryFruit = () => {
   );
 };
 
-export default CategoryFruit;
+export default CategoryFamily;

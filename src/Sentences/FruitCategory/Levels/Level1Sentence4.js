@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '/GitHub/ai-test-work/src/word_learning.css';
+import '../../../word_learning.css';
 
-const optionsList = ["Strawberry", "Orange", "Apple", "Banana"];
-const correctAnswer = "Strawberry";
+const optionsList = ["Aardbei", "Loop", "Appel", "Banaan"];
+const correctAnswer = "Loop";
 
-const Level1Word1 = () => {
+const Level1Sentence4 = () => {
   const [selected, setSelected] = useState(null);
   const [answeredCorrectly, setAnsweredCorrectly] = useState(false);
   const navigate = useNavigate();
@@ -57,17 +57,23 @@ const Level1Word1 = () => {
         </div>
 
         <main className="content">
-          <h2>Choose the correct word</h2>
+          <h2>Finish the sentence</h2>
 
-          <div className="image-container">
+          <div className="big-cow-sentence">
             <img
-              src="/images/ChatGPT Image Apr 23, 2025, 11_38_02 AM.svg"
+              src="/images/orange big cow.svg"
               alt="Orange"
             />
           </div>
 
-          <div className="word" data-correct={correctAnswer}>
-            Aardbei
+          <div className="sentence" data-correct={correctAnswer}>
+            <h4>Ik</h4>
+            <hr className="orange-vertical-dotted-line" />
+          </div>
+
+          <div className="sentence-translation">
+            <h4>Ik</h4>
+            <hr className="orange-vertical-dotted-line" />
           </div>
 
           <div className="options">
@@ -93,10 +99,10 @@ const Level1Word1 = () => {
         <div className="footer">
           {answeredCorrectly ? (
             <Link
-              to="/Words/Fruit-Category/Levels/Level-1-word-2"
+              to="/Sentences/Fruit-Category/Category-Fruit"
               className="btn next-btn correct-btn"
             >
-              Next
+              Finish
             </Link>
           ) : (
             <button className="btn next-btn" onClick={handleCheck}>
@@ -109,4 +115,4 @@ const Level1Word1 = () => {
   );
 };
 
-export default Level1Word1;
+export default Level1Sentence4;
