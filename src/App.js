@@ -7,7 +7,6 @@ import "./App.css";
 
 function AppContent() {
   const { t, handleLanguageDetected } = useLanguage();
-
   const handleDetected = (language) => {
     handleLanguageDetected(language);
     window.location.href = "/Signup/name_input.html";
@@ -40,5 +39,3 @@ function App() {
 }
 
 export default App;
-
-
